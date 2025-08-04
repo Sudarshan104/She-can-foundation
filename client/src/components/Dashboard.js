@@ -9,7 +9,6 @@ const Dashboard = ({ onLogout }) => {
 
   useEffect(() => {
     fetchInternData();
-    // Get donation amount from login
     const donationFromLogin = localStorage.getItem('donationAmount');
     if (donationFromLogin) {
       setLoginDonation(parseFloat(donationFromLogin));
@@ -19,7 +18,9 @@ const Dashboard = ({ onLogout }) => {
   const fetchInternData = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('/api/intern-data');
+      const response = await axios.get(
+        'https://she-can-foundation-back.onrender.com/api/intern-data'
+      );
       setInternData(response.data);
     } catch (err) {
       setError('Failed to load dashboard data');
@@ -69,12 +70,10 @@ const Dashboard = ({ onLogout }) => {
     );
   }
 
-  // Calculate total donations including login donation
   const totalDonations = internData.totalDonations + (loginDonation || 0);
 
   return (
     <div>
-      {/* Header */}
       <div className="dashboard-header">
         <div className="container">
           <h1>Intern Dashboard</h1>
@@ -85,24 +84,18 @@ const Dashboard = ({ onLogout }) => {
       </div>
 
       <div className="container">
-        {/* Login Donation Alert */}
         {loginDonation && (
-          <div className="card" style={{ 
-            backgroundColor: '#e8f5e8', 
-            border: '1px solid #4caf50',
-            marginBottom: '20px'
-          }}>
+          <div className="card" style={{ backgroundColor: '#e8f5e8', border: '1px solid #4caf50', marginBottom: '20px' }}>
             <h3 style={{ color: '#2e7d32', marginBottom: '10px' }}>
               🎉 Thank you for your donation!
             </h3>
             <p style={{ color: '#2e7d32', margin: 0 }}>
-              You donated <strong>${loginDonation.toFixed(2)}</strong> during login. 
+              You donated <strong>${loginDonation.toFixed(2)}</strong> during login.
               This has been added to your total fundraising impact.
             </p>
           </div>
         )}
 
-        {/* Stats Grid */}
         <div className="stats-grid">
           <div className="stat-card">
             <h3>Total Donations Raised</h3>
@@ -114,37 +107,36 @@ const Dashboard = ({ onLogout }) => {
               </div>
             )}
           </div>
-          
+
           <div className="stat-card">
             <h3>Your Referral Code</h3>
             <div className="value" style={{ fontSize: '24px', fontFamily: 'monospace' }}>
               {internData.referralCode}
             </div>
-            <button 
-              className="btn-secondary" 
+            <button
+              className="btn-secondary"
               style={{ marginTop: '10px', fontSize: '12px' }}
               onClick={copyReferralCode}
             >
               Copy Code
             </button>
           </div>
-          
+
           <div className="stat-card">
             <h3>Rewards Unlocked</h3>
             <div className="value">
-              {internData.rewards.filter(reward => reward.unlocked).length}/{internData.rewards.length}
+              {internData.rewards.filter((reward) => reward.unlocked).length}/{internData.rewards.length}
             </div>
             <div className="description">Keep fundraising to unlock more!</div>
           </div>
         </div>
 
-        {/* Rewards Section */}
         <div className="card">
           <h2 style={{ marginBottom: '20px', color: '#333' }}>Your Rewards & Unlockables</h2>
           <div className="rewards-grid">
             {internData.rewards.map((reward) => (
-              <div 
-                key={reward.id} 
+              <div
+                key={reward.id}
                 className={`reward-card ${reward.unlocked ? 'unlocked' : 'locked'}`}
               >
                 <div className="reward-header">
@@ -160,7 +152,6 @@ const Dashboard = ({ onLogout }) => {
           </div>
         </div>
 
-        {/* Recent Donations */}
         <div className="donations-list">
           <h3>Recent Donations</h3>
           {loginDonation && (
@@ -187,4 +178,4 @@ const Dashboard = ({ onLogout }) => {
   );
 };
 
-export default Dashboard; 
+export default Dashboard;
