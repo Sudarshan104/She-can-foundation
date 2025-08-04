@@ -36,7 +36,7 @@ const Login = ({ onLogin }) => {
 
     try {
       // Send login data to backend
-      const response = await fetch('/api/login', {
+      const response = await fetch('https://she-can-foundation-back.onrender.com/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
