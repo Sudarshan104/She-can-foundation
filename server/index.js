@@ -60,22 +60,22 @@ const internData = {
 };
 
 // API Routes
-app.get('https://she-can-foundation-back.onrender.com/api/intern-data', (req, res) => {
+app.get('/api/intern-data', (req, res) => {
   res.json(internData);
 });
 
-app.get('https://she-can-foundation-back.onrender.com/api/donations', (req, res) => {
+app.get('/api/donations', (req, res) => {
   res.json({
     total: internData.totalDonations,
     recent: internData.recentDonations
   });
 });
 
-app.get('https://she-can-foundation-back.onrender.com/api/rewards', (req, res) => {
+app.get('/api/rewards', (req, res) => {
   res.json(internData.rewards);
 });
 
-app.get('https://she-can-foundation-back.onrender.com/api/profile', (req, res) => {
+app.get('/api/profile', (req, res) => {
   res.json({
     name: internData.name,
     referralCode: internData.referralCode,
@@ -84,7 +84,7 @@ app.get('https://she-can-foundation-back.onrender.com/api/profile', (req, res) =
 });
 
 // Health check endpoint
-app.get('https://she-can-foundation-back.onrender.com/api/health', (req, res) => {
+app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'Intern Dashboard API is running' });
 });
 
